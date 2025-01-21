@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Python first-testing
 
 run-name: ${{ github.actor }} write CI/CD for app 🚀
 
@@ -11,7 +11,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Set-up Python
-        uses: actions/python@v4
+        uses: actions/setup-python@v5
         with:
             python-version: "3.x"
       - name: Display python version
