@@ -17,4 +17,4 @@ jobs:
       - name: Display python version
         run: python --version 
       - name: Run app
-        run: python ./app.py
+        run: python ./Encrypting.py
