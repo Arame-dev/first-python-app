@@ -52,6 +52,7 @@ jobs:
 
       - name: CI/CD status
         if: (always)
-        run: STATUS=${{ job.status }} |
-            echo "Job Status: $STATUS"
+        run: STATUS=${{ job.status }} 
+      - name: Echo status
+        run: echo "Job Status:" $STATUS
       
