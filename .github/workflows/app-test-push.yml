@@ -54,5 +54,5 @@ jobs:
         if: always()
         run: STATUS=${{ job.status }} 
       - name: Echo status
-        run: echo "Job Status:" $STATUS
+        run: echo "Job Status:"$STATUS
       
