@@ -1,0 +1,44 @@
+name: Python first-testing
+
+run-name: ${{ github.actor }} write CI/CD for app 🚀
+
+on: push
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set-up Python
+        uses: actions/setup-python@v5
+        with:
+            python-version: "3.x"
+      - name: Display python version
+        run: python --version 
+      - name: Run app
+        run: python ./Encrypting.py
+
+  Deploy_Dockerhub:
+    needs: Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Login in DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{secrets.USERNAME_DOCKERHUB}}
+          password: ${{secrets.PASSWORD_DOCKERHUB}}
+      
+      - name: Build and push Docker-image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.USERNAME_DOCKER }}//first-python-app:latest
+
+      - name: Logout from DockerHub
+        run: docker logout
