@@ -1,5 +1,9 @@
-number = int(input("Write the number you want to encrypt: ")) #number swaping in binary
-key = int(input("Write the key for encrypt: ")) #key swaping in binary
+number = 54 # 110110
+key = 104 # 1101000
+
+# Write in this version if you wnat User write number and key
+# number = int(input("Write the number you want to encrypt: ")) #number is swaping in binary
+# key = int(input("Write the key for encrypt: ")) #key is swaping in binary
 
 # XOR binary encrypt
 # ^ - XOR
