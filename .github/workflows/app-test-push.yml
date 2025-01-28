@@ -2,7 +2,10 @@ name: Python first-testing
 
 run-name: ${{ github.actor }} write CI/CD for app 🚀
 
-on: push
+on:
+  push:
+    branches:
+        main
 
 jobs:
   Test:
