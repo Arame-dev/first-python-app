@@ -56,6 +56,6 @@ jobs:
           username: ${{ secrets.EMAIL }}
           password: ${{ secrets.SMTP_PASSWORD }}
           subject: Github ${{ github.job }} job of ${{ github.repository }} has "${{ job.status }}"
-          body: Hi, in your Github ${{ github.repository }} has "${{ job.status }}", go and see what happend 😊.
+          body: Hi, in your Github "${{ github.repository }}" has "${{ job.status }}", go and see what happend 😊. Link - https://github.com/${{ github.repository }}
           to: ${{secrets.EMAIL}}
           from: ${{secrets.EMAIL}}
