@@ -46,6 +46,7 @@ pipeline{
                     to: "${env.EMAIL}",
                     subject: "Jenkins Job: ${env.JOB_NAME} - ${status}",
                     body: "Job ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} finished with status: ${status}. Link - ${env.BUILD_URL}.",
+                    mimeType: 'text/plain',
                 )
             }
         }
