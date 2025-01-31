@@ -44,9 +44,14 @@ pipeline{
                 def status = currentBuild.result ?: 'SUCCESS'
                 emailext (
                     to: "${env.EMAIL}",
-                    subject: "Jenkins Job: ${env.JOB_NAME} - ${status}",
-                    body: "Job ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} finished with status: ${status}. Link - ${env.BUILD_URL}.",
-                    mimeType: 'text/plain',
+                    subject: "Jenkins Job: ${env.JOB_NAME} - ${currentBuild.result}",
+                    body: """<p>Job details:</p>
+                            <ul>
+                              <li>Status: ${currentBuild.result}</li>
+                              <br><hr>
+                              <li>URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></li>
+                            </ul>""",
+                    mimeType: 'text/html'
                 )
             }
         }
