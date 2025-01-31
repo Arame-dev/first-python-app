@@ -41,7 +41,7 @@ pipeline{
     post{
         always{
             script{
-                def status = currentBuild.result ? : "SUCCESS"
+                def status = currentBuild.result ?: 'SUCCESS'
                 emailext (
                     to: "${env.EMAIL}",
                     subject: "Jenkins Job: ${env.JOB_NAME} - ${status}",
