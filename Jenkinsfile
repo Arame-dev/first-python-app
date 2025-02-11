@@ -17,9 +17,12 @@ pipeline{
             //     }
             // }
             steps {
-                script{
-                    sh 'apt-get install -y python3'
-                }
+                sh '''
+                sudo apt update
+                sudo apt install -y python3 python3-pip
+                '''
+            }
+            steps{
                 checkout scm
                 sh 'python3 --version'
                 sh 'python3 ./Encrypting.py'
@@ -42,7 +45,7 @@ pipeline{
             // }
             steps {
                 script{
-                    sh " echo 'Build & Push' " 
+                    echo "Build & Push"
                 }
             }
         }
