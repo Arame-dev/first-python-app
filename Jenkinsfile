@@ -18,7 +18,7 @@ pipeline{
             // }
             steps {
                 script{
-                    sh "apt update && apt install -y python3"
+                    sh "apt update && apt-get install -y python3"
                 }
                 checkout scm
                 sh 'python3 --version'
