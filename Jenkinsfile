@@ -9,41 +9,32 @@ pipeline{
 
     stages{
         stage('Test'){
-            // agent {
-            //     docker {
-            //         image 'python:3.11-slim'
-            //         reuseNode true
-            //         args '-v /var/run/docker.sock:/var/run/docker.sock'
-            //     }
-            // }
-                steps {
-                    sh '''
-                    sudo apt update
-                    sudo apt install -y python3 python3-pip
-                    '''
+            agent {
+                docker {
+                    image 'python:3.11-slim'
+                    reuseNode true
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
+            steps {
                     checkout scm
                     sh 'python3 --version'
                     sh 'python3 ./Encrypting.py'
-                }
+            }
         }
 
         stage('Build & Push to DockerHub') {
-            // when {
-            //     expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
-            // }
-            // steps {
-            //     script {
-            //         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
-            //             sh """
-            //             docker build -t ${env.DOCKER_IMAGE} .
-            //             docker push ${env.DOCKER_IMAGE}
-            //             """
-            //         }
-            //     }
-            // }
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
             steps {
-                script{
-                    echo "Build & Push"
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
+                        sh """
+                        docker build -t ${env.DOCKER_IMAGE} .
+                        docker push ${env.DOCKER_IMAGE}
+                        """
+                    }
                 }
             }
         }
