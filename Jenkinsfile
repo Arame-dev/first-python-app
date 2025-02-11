@@ -16,8 +16,10 @@ pipeline{
             //         args '-v /var/run/docker.sock:/var/run/docker.sock'
             //     }
             // }
-            script{
-                sh "apt update && apt install -y python3"
+            steps{
+                script{
+                    sh "apt update && apt install -y python3"
+                }
             }
             steps {
                 checkout scm
