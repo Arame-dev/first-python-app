@@ -42,7 +42,7 @@ pipeline{
             // }
             steps {
                 script{
-                    sh " echo "Build & Push" " 
+                    sh " echo 'Build & Push' " 
                 }
             }
         }
