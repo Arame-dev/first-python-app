@@ -16,16 +16,20 @@ pipeline{
             //         args '-v /var/run/docker.sock:/var/run/docker.sock'
             //     }
             // }
-            steps {
-                sh '''
-                sudo apt update
-                sudo apt install -y python3 python3-pip
-                '''
+            stage{
+                steps {
+                    sh '''
+                    sudo apt update
+                    sudo apt install -y python3 python3-pip
+                    '''
+                }
             }
-            steps{
-                checkout scm
-                sh 'python3 --version'
-                sh 'python3 ./Encrypting.py'
+            stage{
+                steps{
+                    checkout scm
+                    sh 'python3 --version'
+                    sh 'python3 ./Encrypting.py'
+                }
             }
         }
 
