@@ -33,10 +33,10 @@ pipeline{
                         docker build -t ${env.DOCKER_IMAGE} .
                         docker push ${env.DOCKER_IMAGE}
                     """
+                    }
                 }
             }
         }
-    }
     }
     post{
         always{
