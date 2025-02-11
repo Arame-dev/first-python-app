@@ -9,13 +9,6 @@ pipeline{
 
     stages{
         stage('Test'){
-            agent {
-                docker {
-                    image 'python:3.11-slim'
-                    reuseNode true
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
                     checkout scm
                     sh 'python3 --version'
