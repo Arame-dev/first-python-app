@@ -11,8 +11,8 @@ pipeline{
         stage('Test'){
             steps {
                     checkout scm
-                    sh 'python3 --version'
-                    sh 'python3 ./Encrypting.py'
+                    sh 'python --version'
+                    sh 'python ./Encrypting.py'
             }
         }
 
