@@ -13,6 +13,7 @@ pipeline{
                 docker {
                     image 'python:3.11-slim'
                     reuseNode true
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
                 }
             }
             steps {
@@ -28,11 +29,11 @@ pipeline{
             }
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'dockerhub-creds', url: 'https://registry.hub.docker.com'){
-                    sh """
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
+                        sh """
                         docker build -t ${env.DOCKER_IMAGE} .
                         docker push ${env.DOCKER_IMAGE}
-                    """
+                        """
                     }
                 }
             }
