@@ -9,32 +9,40 @@ pipeline{
 
     stages{
         stage('Test'){
-            agent {
-                docker {
-                    image 'python:3.11-slim'
-                    reuseNode true
-                    args '-v /var/run/docker.sock:/var/run/docker.sock'
-                }
+            // agent {
+            //     docker {
+            //         image 'python:3.11-slim'
+            //         reuseNode true
+            //         args '-v /var/run/docker.sock:/var/run/docker.sock'
+            //     }
+            // }
+            script{
+                sh "apt update && apt install -y python3"
             }
             steps {
                 checkout scm
-                sh 'python --version'
-                sh 'python ./Encrypting.py'
+                sh 'python3 --version'
+                sh 'python3 ./Encrypting.py'
             }
         }
 
         stage('Build & Push to DockerHub') {
-            when {
-                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
-            }
+            // when {
+            //     expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            // }
+            // steps {
+            //     script {
+            //         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
+            //             sh """
+            //             docker build -t ${env.DOCKER_IMAGE} .
+            //             docker push ${env.DOCKER_IMAGE}
+            //             """
+            //         }
+            //     }
+            // }
             steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
-                        sh """
-                        docker build -t ${env.DOCKER_IMAGE} .
-                        docker push ${env.DOCKER_IMAGE}
-                        """
-                    }
+                script{
+                    sh " echo "Build & Push" " 
                 }
             }
         }
