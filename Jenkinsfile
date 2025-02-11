@@ -16,21 +16,15 @@ pipeline{
             //         args '-v /var/run/docker.sock:/var/run/docker.sock'
             //     }
             // }
-            stage{
                 steps {
                     sh '''
                     sudo apt update
                     sudo apt install -y python3 python3-pip
                     '''
-                }
-            }
-            stage{
-                steps{
                     checkout scm
                     sh 'python3 --version'
                     sh 'python3 ./Encrypting.py'
                 }
-            }
         }
 
         stage('Build & Push to DockerHub') {
