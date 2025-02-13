@@ -8,17 +8,11 @@ pipeline{
     }
 
     stages{
-        stage{
-            agent {
-                docker {
-                    image 'python:3.11-slim'
-                    reuseNode true
-                }
-            }
+        stage('Test'){
             steps {
-                checkout scm
-                sh 'python --version'
-                sh 'python ./Encrypting.py'
+                    checkout scm
+                    sh 'python3 --version'
+                    sh 'python3 ./Encrypting.py'
             }
         }
 
@@ -28,24 +22,30 @@ pipeline{
             }
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'dockerhub-creds', url: 'https://registry.hub.docker.com') 
-                    sh """
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-creds') {
+                        sh """
                         docker build -t ${env.DOCKER_IMAGE} .
                         docker push ${env.DOCKER_IMAGE}
-                    """
+                        """
+                    }
                 }
             }
         }
     }
-
     post{
         always{
             script{
-                def status = currentBuild.result
+                def status = currentBuild.result ?: 'SUCCESS'
                 emailext (
-                    to: ${env.EMAIL},
-                    subject: "Jenkins Job: ${env.JOB_NAME} - ${status}",
-                    body: "Job ${env.JOB_NAME} with build number ${env.BUILD_NUMBER} finished with status: ${status}. Link - ${env.BUILD_URL}.",
+                    to: "${env.EMAIL}",
+                    subject: "Jenkins Job: ${env.JOB_NAME} - ${currentBuild.result}",
+                    body: """<p>Job details:</p>
+                            <ul>
+                              <li>Status: ${currentBuild.result}</li>
+                              <br><hr>
+                              <li>URL: <a href="${env.BUILD_URL}">${env.BUILD_URL}</a></li>
+                            </ul>""",
+                    mimeType: 'text/html'
                 )
             }
         }
